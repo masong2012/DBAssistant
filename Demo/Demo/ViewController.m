@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "User.h"
 
 @interface ViewController ()
 
@@ -16,14 +17,34 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    
+    
+    User *user = [[User alloc]init];
+    user.name = @"mason";
+    user.height = 180.23;
+    user.num = 123456;
+    [user saveModel];
+    
+    NSLog(@"users count: %ld",User.allModels.count);
+    
+    user = [User firstModelWhere:@{DBRowId: @(1)}];
+    NSLog(@"name %@,num: %ld,height: %lf",user.name,user.num,user.height);
+    
+    
+    [user updateModel:@{@"name": @"Dear"}];
+    
+    user = [User firstModelWhere:@{DBRowId: @(1)}];
+    NSLog(@"name %@,num: %ld,height: %lf",user.name,user.num,user.height);
+    
+    
+    [user deleteModel];
+    NSLog(@"users count: %ld",User.allModels.count);
+    
+    
+    
 }
 
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 
 @end
